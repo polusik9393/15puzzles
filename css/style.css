@@ -24,6 +24,15 @@ h1 {
     font-size: 25px;
 }
 
+.new-game {
+  display: none;
+    border: solid 3px #DEB887;
+    background-color: #65d273;
+    color: #2c542d;
+    margin-top: 5px;
+    font-size: 25px;
+}
+
 table {
     background-color: #FAEBD7;
     border: 9px solid #DEB887;

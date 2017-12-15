@@ -6,11 +6,15 @@ Array.prototype.shuffle = function(i1, j1, i2, j2) {
     this[i2][j2] = t;
 }
 
-window.onload = function() {
+window.onload = startGame;
+function startGame() {
     box = document.getElementById("box");
     var startButton = document.querySelector('.start-game');
+    var newGameButton = document.getElementById('game');
 
     startButton.onclick =  startGameClicked;
+
+    newGameButton.onclick =  refresh;
 
 
     function startGameClicked() {
@@ -18,11 +22,14 @@ window.onload = function() {
 
         newGame(difficulty);
     }
-    newGame(difficulty);
+
 
 }
 
-
+function refresh()
+    {
+        window.location.reload();
+    }
 
 function startGameTimer() {
   this.timeContainer = document.querySelector('.time-text');
@@ -51,12 +58,15 @@ function cellClick(event) {
                     q = false;
                     break;
                 }
-        if (q) alert("Victory!");
+        if (q) {alert('Ура! Вы решили головоломку за '+gameTime+'c.');
+      clearInterval(gameInterval);
+    };
     }
 }
 
 function newGame(dif) {
-  startGameTimer();
+
+startGameTimer();
     for (i = 0; i < dif; ++i) {
         arr[i] = []
         for (j = 0; j < dif; ++j) {
@@ -99,4 +109,8 @@ function newGame(dif) {
     if (box.childNodes.length == 1)
         box.removeChild(box.firstChild);
     box.appendChild(table);
+    difficulty.style.display = "none";
+    start.style.display = "none";
+    game.style.display = "inline-block";
+    time.style.display = "block";
 }
