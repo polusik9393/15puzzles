@@ -8,11 +8,33 @@ Array.prototype.shuffle = function(i1, j1, i2, j2) {
 
 window.onload = function() {
     box = document.getElementById("box");
-    newGame();
-    document.getElementById("reset").onclick = newGame;
+    var startButton = document.querySelector('.start-game');
+
+    startButton.onclick =  startGameClicked;
+
+
+    function startGameClicked() {
+        var difficulty = document.querySelector('[name="game-difficulty"]:checked').value;
+
+        newGame(difficulty);
+    }
+    newGame(difficulty);
+
 }
 
+
+
+function startGameTimer() {
+  this.timeContainer = document.querySelector('.time-text');
+  this.gameTime = 0;
+        this.timeContainer.innerHTML = '' + this.gameTime;
+        this.gameInterval = setInterval(() => {
+            this.timeContainer.innerHTML = '' + ++this.gameTime;
+        }, 1000);
+    }
+
 function cellClick(event) {
+    var dif = document.querySelector('[name="game-difficulty"]:checked').value;
     var event = event || window.event,
         el = event.srcElement || event.target,
         i = el.id.charAt(0),
@@ -23,9 +45,9 @@ function cellClick(event) {
         ei = i;
         ej = j;
         var q = true;
-        for (i = 0; i < 4; ++i)
-            for (j = 0; j < 4; ++j)
-                if (i + j != 6 && document.getElementById(i + " " + j).innerHTML != i * 4 + j + 1) {
+        for (i = 0; i < dif; ++i)
+            for (j = 0; j < dif; ++j)
+                if (i + j != dif*2-2 && document.getElementById(i + " " + j).innerHTML != i * dif + j + 1) {
                     q = false;
                     break;
                 }
@@ -33,28 +55,29 @@ function cellClick(event) {
     }
 }
 
-function newGame() {
-    for (i = 0; i < 4; ++i) {
+function newGame(dif) {
+  startGameTimer();
+    for (i = 0; i < dif; ++i) {
         arr[i] = []
-        for (j = 0; j < 4; ++j) {
-            if (i + j != 6)
-                arr[i][j] = i * 4 + j + 1;
+        for (j = 0; j < dif; ++j) {
+            if (i + j != dif * 2 - 2)
+                arr[i][j] = i * dif + j + 1;
             else
                 arr[i][j] = "";
         }
     }
-    ei = 3;
-    ej = 3;
-    for (i = 0; i < 1600; ++i)
+    ei = dif-1;
+    ej = dif-1;
+    for (i = 0; i < 1000000; ++i)
         switch (Math.round(3 * Math.random())) {
             case 0:
                 if (ei != 0) arr.shuffle(ei, ej, --ei, ej);
                 break; // up
             case 1:
-                if (ej != 3) arr.shuffle(ei, ej, ei, ++ej);
+                if (ej != dif-1) arr.shuffle(ei, ej, ei, ++ej);
                 break; // right
             case 2:
-                if (ei != 3) arr.shuffle(ei, ej, ++ei, ej);
+                if (ei != dif-1) arr.shuffle(ei, ej, ++ei, ej);
                 break; // down
             case 3:
                 if (ej != 0) arr.shuffle(ei, ej, ei, --ej); // left
@@ -62,9 +85,9 @@ function newGame() {
     var table = document.createElement("table"),
         tbody = document.createElement("tbody");
     table.appendChild(tbody);
-    for (i = 0; i < 4; ++i) {
+    for (i = 0; i < dif; ++i) {
         var row = document.createElement("tr");
-        for (j = 0; j < 4; ++j) {
+        for (j = 0; j < dif; ++j) {
             var cell = document.createElement("td");
             cell.id = i + " " + j;
             cell.onclick = cellClick;

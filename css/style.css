@@ -2,18 +2,31 @@ body {
     text-align: center;
 }
 
-#reset {
-    border: solid 3px #2c542d;
-    background-color: #F0F8FF;
+h1 {
+  color: #2c542d;
+}
+
+.game-time {
+  display: none;
+  border: solid 3px #DEB887;
+  background-color: #010860;
+  color: #e2f8ff;
+  width: 300px;
+  margin: 0 auto 5px auto;
+  font-size: 25px;
+}
+
+.start-game {
+    border: solid 3px #DEB887;
+    background-color: #65d273;
     color: #2c542d;
     margin-top: 5px;
+    font-size: 25px;
 }
 
 table {
     background-color: #FAEBD7;
     border: 9px solid #DEB887;
-    height: 300px;
-    width: 300px;
     margin: auto;
 }
 
